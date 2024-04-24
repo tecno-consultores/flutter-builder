@@ -1,23 +1,54 @@
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 LABEL maintainer="Jesus Palencia sinfallas@gmail.com"
-
-USER root
-WORKDIR /app
-ENV PATH="/usr/bin/flutter/platform-tools:/usr/bin/flutter/emulator:/usr/bin/flutter/bin:/usr/bin/flutter/bin/cache/dart-sdk/bin:${PATH}"
+ENV DEBIAN_FRONTEND="noninteractive"
+ENV JAVA_VERSION="17"
+ENV ANDROID_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
+ENV ANDROID_VERSION="29"
+ENV ANDROID_BUILD_TOOLS_VERSION="29.0.3"
+ENV ANDROID_ARCHITECTURE="x86_64"
+ENV ANDROID_SDK_ROOT="/usr/local/android-sdk"
+ENV FLUTTER_CHANNEL="stable"
+ENV FLUTTER_VERSION="3.19.6"
+ENV GRADLE_VERSION="7.2"
+ENV GRADLE_USER_HOME="/opt/gradle"
+ENV GRADLE_URL="https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip"
+ENV FLUTTER_URL="https://storage.googleapis.com/flutter_infra_release/releases/$FLUTTER_CHANNEL/linux/flutter_linux_$FLUTTER_VERSION-$FLUTTER_CHANNEL.tar.xz"
+ENV FLUTTER_ROOT="/opt/flutter"
+ENV PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/platforms:$FLUTTER_ROOT/bin:$GRADLE_USER_HOME/bin:$PATH"
 ENV FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter
 ENV PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub
-ENV ANDROID_SDK_ROOT=/app/Android/sdk
-ENV ANDROID_HOME=/app/Android/sdk LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US:en
-#ENV PUB_HOSTED_URL=https://pub.flutter-io.cn
-#ENV FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-RUN mkdir -p /root/.ssh
-COPY id_rsa id_rsa.pub /root/.ssh
-RUN chown root:root /root/.ssh/* && chmod 600 /root/.ssh/*
-RUN mkdir -p Android/sdk && mkdir -p .android && touch .android/repositories.cfg
-RUN apt update -qq && apt -y dist-upgrade && apt -y install --no-install-recommends --no-install-suggests adb locales libgtk-3-dev liblzma-dev build-essential ssh pkg-config unzip xz-utils libglu1-mesa clang cmake ninja-build libxtst6 libnss3-dev libnspr4 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0 libgdk-pixbuf2.0-0 libsqlite3-dev openjdk-11-jdk sudo wget bc software-properties-common ruby-full ruby-bundler libstdc++6 libpulse0 curl file git zip && apt clean && rm -rf /var/lib/apt/lists/*
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen && update-locale LANG=en_US.UTF-8
-#RUN wget -O sdk-tools.zip https://dl.google.com/android/repository/platform-tools-latest-linux.zip?hl=es-419 && mv -f sdk-tools.zip /app/Android/sdk/sdk-tools.zip && cd /app/Android/sdk/ && unzip sdk-tools.zip && rm sdk-tools.zip
-RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && unzip sdk-tools-linux-4333796.zip -d /app/Android/sdk
-RUN mkdir -p /usr/bin/flutter/ && git clone https://github.com/flutter/flutter.git /usr/bin/flutter/
-RUN flutter doctor -v
-CMD ["/bin/bash"]
+ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
+
+RUN apt-get update -qq && apt-get -y install --no-install-recommends --no-install-suggests nginx openjdk-$JAVA_VERSION-jdk curl unzip sed git bash xz-utils libglvnd0 ssh xauth x11-xserver-utils libpulse0 libxcomposite1 libgl1-mesa-glx && rm -rf /var/lib/{apt,dpkg,cache,log} && apt-get clean
+
+RUN curl -L $GRADLE_URL -o gradle-$GRADLE_VERSION-bin.zip
+RUN unzip gradle-$GRADLE_VERSION-bin.zip
+RUN mv gradle-$GRADLE_VERSION $GRADLE_USER_HOME
+RUN rm gradle-$GRADLE_VERSION-bin.zip
+
+RUN mkdir /root/.android
+RUN touch /root/.android/repositories.cfg
+RUN mkdir -p $ANDROID_SDK_ROOT
+RUN curl -o android_tools.zip $ANDROID_TOOLS_URL
+RUN unzip -qq -d "$ANDROID_SDK_ROOT" android_tools.zip
+RUN rm android_tools.zip
+RUN mv $ANDROID_SDK_ROOT/cmdline-tools $ANDROID_SDK_ROOT/latest
+RUN mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+RUN mv $ANDROID_SDK_ROOT/latest $ANDROID_SDK_ROOT/cmdline-tools/latest
+RUN yes "y" | sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION"
+RUN yes "y" | sdkmanager "platforms;android-$ANDROID_VERSION"
+RUN yes "y" | sdkmanager "platform-tools"
+
+RUN curl -o flutter.tar.xz $FLUTTER_URL
+RUN mkdir -p $FLUTTER_ROOT
+RUN tar xf flutter.tar.xz -C /opt/
+RUN rm flutter.tar.xz
+RUN git config --global --add safe.directory /opt/flutter
+RUN flutter config --no-analytics
+RUN flutter precache
+RUN yes "y" | flutter doctor --android-licenses
+RUN flutter doctor
+RUN flutter update-packages
+
+EXPOSE 80
+CMD /usr/sbin/nginx -g "daemon off;"
