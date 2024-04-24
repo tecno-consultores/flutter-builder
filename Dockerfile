@@ -19,7 +19,7 @@ ENV FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter
 ENV PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub
 ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
 
-RUN apt-get update -qq && apt-get -y install --no-install-recommends --no-install-suggests nginx openjdk-$JAVA_VERSION-jdk curl unzip sed git bash xz-utils libglvnd0 ssh xauth x11-xserver-utils libpulse0 libxcomposite1 libgl1-mesa-glx && rm -rf /var/lib/{apt,dpkg,cache,log} && apt-get clean
+RUN apt-get update -qq && apt-get -y install --no-install-recommends --no-install-suggests nginx nano openjdk-$JAVA_VERSION-jdk curl unzip sed git bash xz-utils libglvnd0 ssh xauth x11-xserver-utils libpulse0 libxcomposite1 libgl1-mesa-glx && rm -rf /var/lib/{apt,dpkg,cache,log} && apt-get clean
 
 RUN curl -L $GRADLE_URL -o gradle-$GRADLE_VERSION-bin.zip
 RUN unzip gradle-$GRADLE_VERSION-bin.zip
