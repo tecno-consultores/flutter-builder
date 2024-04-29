@@ -1,5 +1,6 @@
 FROM ubuntu:20.04
 LABEL maintainer="Jesus Palencia sinfallas@gmail.com"
+
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV JAVA_VERSION="17"
 ENV ANDROID_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
