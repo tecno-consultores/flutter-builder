@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Made by Sinfallas <sinfallas@yahoo.com>
+# Licence: GPL-2
+
+if [[ "$EUID" = "0" ]]; then
+	echo -e "\e[00;31mERROR: NO debe ser root.\e[00m"
+	exit 1
+fi
+
+clear
+docker buildx rm container-builder
+docker buildx create --name container-builder --driver docker-container --bootstrap --use
+docker buildx build --platform linux/arm64,linux/arm/v7,linux/amd64 --push -t sinfallas/flutter-builder:latest --builder=container-builder -f Dockerfile .
+docker buildx rm container-builder
+docker system prune -af
+docker builder prune -af
+docker buildx prune -af
+
+echo "finalizado..."
+exit 0
