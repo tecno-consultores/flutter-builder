@@ -2,6 +2,8 @@ services:
   flutter-builder:
     image: sinfallas/flutter-builder:latest
     container_name: flutter_ci_runner
+    hostname: flutter_ci_runner
+    pull_policy: always
     volumes:
       - ./codigo_flutter:/app
     working_dir: /app
