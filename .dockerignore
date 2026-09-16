@@ -1,0 +1,39 @@
+# Control de versiones
+.git
+.gitignore
+
+# Archivos de configuración de Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Configuración de IDEs y editores
+.idea/
+.vscode/
+*.iml
+*.swp
+*.DS_Store
+
+# Variables de entorno y credenciales
+.env
+.env.*
+
+# Directorios de compilación y cachés de Flutter/Dart
+build/
+.dart_tool/
+.pub-cache/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+*.log
+
+# Caché y configuración local de Android
+android/.gradle/
+android/local.properties
+**/*.keystore
+**/*.jks
+
+# Plataformas de escritorio y Apple (innecesarias en un contenedor Linux)
+ios/
+macos/
+windows/
