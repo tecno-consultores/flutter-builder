@@ -21,10 +21,12 @@ ENV PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/emulator:
 
 WORKDIR /app
 
-RUN apt-get update -qq && apt-get -y dist-upgrade && apt-get -y install --no-install-recommends --no-install-suggests nginx awscli nano openjdk-$JAVA_VERSION-jdk curl unzip sed git bash xz-utils libglvnd0 ssh xauth x11-xserver-utils libpulse0 libxcomposite1 libgl1 && apt-get clean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/* /tmp/*
+RUN apt-get update -qq && apt-get -y dist-upgrade && apt-get -y install --no-install-recommends --no-install-suggests awscli nano openjdk-$JAVA_VERSION-jdk curl unzip sed git bash xz-utils libglvnd0 ssh xauth x11-xserver-utils libpulse0 libxcomposite1 libgl1 && apt-get clean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN curl -f -L $GRADLE_URL -o gradle.zip && unzip -q gradle.zip && mv gradle-${GRADLE_VERSION} $GRADLE_USER_HOME && rm -fv gradle.zip
 
 RUN mkdir -p /root/.android $ANDROID_SDK_ROOT && touch /root/.android/repositories.cfg && curl -o android_tools.zip $ANDROID_TOOLS_URL && unzip -qq -d "$ANDROID_SDK_ROOT" android_tools.zip && rm android_tools.zip && mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/latest && mv $ANDROID_SDK_ROOT/cmdline-tools/bin $ANDROID_SDK_ROOT/cmdline-tools/latest/ && mv $ANDROID_SDK_ROOT/cmdline-tools/lib $ANDROID_SDK_ROOT/cmdline-tools/latest/ && yes "y" | sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" && yes "y" | sdkmanager "platforms;android-$ANDROID_VERSION" && yes "y" | sdkmanager "platform-tools"
 
 RUN curl -o flutter.tar.xz $FLUTTER_URL && mkdir -p $FLUTTER_ROOT && tar xf flutter.tar.xz -C /opt/ && rm flutter.tar.xz && git config --global --add safe.directory /opt/flutter && flutter config --no-analytics && flutter precache && yes "y" | flutter doctor --android-licenses && flutter doctor && flutter update-packages
+
+CMD ["/bin/bash"]
