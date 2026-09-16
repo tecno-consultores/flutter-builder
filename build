@@ -10,7 +10,7 @@ fi
 clear
 docker buildx rm container-builder
 docker buildx create --name container-builder --driver docker-container --bootstrap --use
-docker buildx build --platform linux/arm64,linux/arm/v7,linux/amd64 --push -t sinfallas/flutter-builder:latest --builder=container-builder -f Dockerfile .
+docker buildx build --platform linux/amd64 --push -t sinfallas/flutter-builder:latest --builder=container-builder -f Dockerfile .
 docker buildx rm container-builder
 docker system prune -af
 docker builder prune -af
