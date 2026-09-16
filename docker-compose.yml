@@ -1,13 +1,8 @@
 services:
   flutter-builder:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    container_name: legacy_flutter_env
-    restart: unless-stopped
-    ports:
-      - "8080:80" # Expone Nginx por si decides darle uso web más adelante
+    image: sinfallas/flutter-builder:latest
+    container_name: flutter_ci_runner
     volumes:
-      # Mapea la carpeta local del código fuente hacia /app dentro del contenedor
       - ./codigo_flutter:/app
     working_dir: /app
+    command: bash -c "flutter pub get && flutter build apk --release"
