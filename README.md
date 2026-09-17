@@ -1,9 +1,8 @@
 # flutter-builder
 
-Environment designed to be used in CI/CD flows to compile modern Android APKs or App Bundles
+ [![Descargas de Docker](https://img.shields.io/docker/pulls/sinfallas/hermes-opencode-bridge?style=flat&logo=docker&color=blue)](https://hub.docker.com/r/sinfallas/flutter-builder)
 
-Get this image on:
-* [Docker Hub: sinfallas/flutter-builder](https://hub.docker.com/r/sinfallas/flutter-builder)
+Environment designed to be used in CI/CD flows to compile modern Android APKs or App Bundles
 
 ## 🛠️ Stack & Versions
 
