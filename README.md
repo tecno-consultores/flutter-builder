@@ -8,10 +8,10 @@ Get this image on:
 ## 🛠️ Stack & Versions
 
 * **OS:** Ubuntu 26.04
-* **Java:** JDK 21
-* **Gradle:** 8.7
+* **Java:** JDK 26
+* **Gradle:** 9.7.1
 * **Android SDK:** API 35 (Build Tools 35.0.0)
-* **Flutter:** 3.24.0 (Stable Channel)
+* **Flutter:** 3.47.4 (Stable Channel)
 
 ## 🚀 Usage (Docker Compose)
 
