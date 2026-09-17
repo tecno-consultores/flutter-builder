@@ -1,10 +1,32 @@
 services:
-  flutter-builder:
+  build-apk:
     image: sinfallas/flutter-builder:latest
-    container_name: flutter_ci_runner
-    hostname: flutter_ci_runner
-    pull_policy: always
+    profiles: ["dev", "pre"]
+    container_name: ${hostname} 
+    hostname: ${hostname}
+    pull_policy: ${pull_policy}
     volumes:
       - ./codigo_flutter:/app
     working_dir: /app
     command: bash -c "flutter pub get && flutter build apk --release"
+
+  build-publish-aab:
+    image: sinfallas/flutter-builder:latest
+    profiles: ["pro"]
+    container_name: ${hostname} 
+    hostname: ${hostname}
+    pull_policy: ${pull_policy}
+    volumes:
+      - ./codigo_flutter:/app
+      - ${PLAY_STORE_JSON_PATH}:/secrets/play_store_key.json:ro
+    working_dir: /app
+    environment:
+      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+      - KEY_ALIAS=${KEY_ALIAS}
+      - KEY_PASSWORD=${KEY_PASSWORD}
+      - PACKAGE_NAME=${PACKAGE_NAME}
+    command: >
+      bash -c "flutter pub get && 
+      flutter build appbundle --release && 
+      cd android && 
+      fastlane supply --track production --aab ../build/app/outputs/bundle/release/app-release.aab --json_key /secrets/play_store_key.json --package_name $$PACKAGE_NAME"
