@@ -67,3 +67,6 @@ app.*.map.json
 .env
 .env.*
 !.env.example
+
+# Código fuente de la aplicación (Inyectado por el pipeline)
+codigo_flutter/
