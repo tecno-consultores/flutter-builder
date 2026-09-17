@@ -10,7 +10,8 @@ Environment designed to be used in CI/CD flows to compile modern Android APKs or
 * **Java:** JDK 26
 * **Gradle:** 9.7.1
 * **Android SDK:** API 35 (Build Tools 35.0.0)
-* **Flutter:** 3.47.4 (Stable Channel)
+* **Flutter:** 3.47.4
+* **Fastlane**
 
 ## 🚀 Usage (Docker Compose)
 
