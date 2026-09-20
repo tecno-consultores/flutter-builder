@@ -1,5 +1,5 @@
 FROM ubuntu:26.04
-LABEL maintainer="Jesus Palencia sinfallas@gmail.com"
+LABEL org.opencontainers.image.authors="sinfallas@gmail.com"
 
 ENV DEBIAN_FRONTEND="noninteractive" 
 ENV JAVA_VERSION="26"
@@ -37,3 +37,5 @@ RUN mkdir -p /root/.android $ANDROID_SDK_ROOT && touch /root/.android/repositori
 RUN curl -o flutter.tar.xz $FLUTTER_URL && mkdir -p $FLUTTER_ROOT && tar xf flutter.tar.xz -C /opt/ && rm -fv flutter.tar.xz && git config --global --add safe.directory /opt/flutter && flutter config --no-analytics && flutter precache && yes "y" | flutter doctor --android-licenses && flutter doctor && flutter update-packages
 
 CMD ["/bin/bash"]
+ARG BUILD_DATE
+LABEL org.opencontainers.image.created=$BUILD_DATE
