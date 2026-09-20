@@ -1,65 +1,249 @@
-commit 110ddc8138663d84866074f4647a1b4aa2b9db3a (HEAD -> main, origin/main, origin/HEAD)
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Sun May 5 16:52:30 2024 -0400
-
-    * docker
-
-commit e5cdbebb4fa22a5e780d11b881de2d2ee82285c1
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Sun Apr 28 23:14:32 2024 -0400
-
-    * changelog
-
-commit bffc158b9d5c46dd91dd4a5618c689efa183251f
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Sun Apr 28 23:14:12 2024 -0400
-
-    * para publicacion
-
-commit 5ee5a9e50ed3db081421039eb993650a7ede2949
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Wed Apr 24 11:20:06 2024 -0400
-
-    Update Dockerfile
-
-commit 8039329a3f278243ff75cef3023b649ec7cc2066
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Wed Apr 24 10:47:23 2024 -0400
-
-    Update Dockerfile
-
-commit c536fa160b729d9355a396c3c302b3eeb6e10889
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Wed Apr 24 10:29:14 2024 -0400
-
-    Update Dockerfile
-
-commit 87ecab7fc05aec445df7844c9f5861aa914abb30
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Thu Apr 18 21:57:31 2024 -0400
-
-    * changelog
-
-commit 931af73a0bd58cc0bb0917045b0dd37744c4732c
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Thu Apr 18 21:57:24 2024 -0400
-
-    * update
-
-commit 7a4e3de5758ebd13f4befc7379e0477973804cf7
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Wed Apr 17 18:03:30 2024 -0400
-
-    * changelog
-
-commit 7445ce4b901f6ca979f55f79c623a3677085d9a0
-Author: Jesus Palencia <sinfallas@gmail.com>
-Date:   Wed Apr 17 18:03:13 2024 -0400
-
-    * primer commit
-
-commit b669ba7ddfeaac4942a930c903da6db169bcdb92
-Author: Jose Perez <sinfallas@yahoo.com>
-Date:   Wed Apr 17 17:57:46 2024 -0400
-
-    Initial commit
+* commit 909c740fb636e115f236f36d33c6684408d85e91 (HEAD -> main, origin/main, origin/HEAD)
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Sun Sep 20 13:18:05 2026 -0400
+| 
+|     * update
+| 
+* commit 5580de4abd45b354078b609c566b6750affa2b8c
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 13:32:49 2026 -0400
+| 
+|     Enhance README with Fastlane and usage details
+|     
+|     Updated README to include Fastlane automation for Google Play releases and clarified usage instructions.
+| 
+* commit 5a6d578ad7dafa6b1da38058c61582223b0556bd
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 13:26:06 2026 -0400
+| 
+|     Update README with Fastlane details
+|     
+|     Added Fastlane information to the README.
+| 
+* commit 3ce30c561b3961eee4ef5698f52cbefa0aa90583
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 13:25:35 2026 -0400
+| 
+|     Update Docker badge link in README.md
+| 
+* commit 6fd10d0272fd496a9785152c768a6f877bc4fce3
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 13:24:58 2026 -0400
+| 
+|     Update README.md
+| 
+* commit 26876e1f9a890704e11dbc3b24ee5f779242dab4
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 11:59:16 2026 -0400
+| 
+|     Add environment configuration example file
+| 
+* commit afe6462489d58b2952008e2180e67e81b7f1e13b
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 11:58:47 2026 -0400
+| 
+|     Refactor Docker Compose for APK and AAB builds
+| 
+* commit fca681fe2766ec6ffef99948b1783c35ef6bc72a
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 11:53:42 2026 -0400
+| 
+|     Update Dockerfile to include Ruby and Fastlane
+|     
+|     Added Ruby and Fastlane installation to Dockerfile.
+| 
+* commit 0fff69248971d106992e415cc9dc92357036f7e8
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 11:07:50 2026 -0400
+| 
+|     Add Flutter source code directory to .gitignore
+| 
+* commit d1feab84b3719f4d9db8a1b705a9df673ebefba1
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 10:57:34 2026 -0400
+| 
+|     Update README.md
+| 
+* commit 62febf8ad3f87bb6aa8c1191023c9eea2e4c72aa
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 10:51:36 2026 -0400
+| 
+|     Add build-image file
+| 
+* commit 3c1f9db2bf29f7da5f9463c3467c2fccd5b61b8b
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Thu Sep 17 10:51:06 2026 -0400
+| 
+|     Update Java, Gradle, and Flutter versions in Dockerfile
+| 
+* commit a5c9e05810bb26815d9fe848aaee08226dd695b8 (tag: v2.0.1)
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:50:33 2026 -0400
+| 
+|     Update and rename AUTHORS to AUTHORS.md
+| 
+* commit 39768ee21753c4fe227c25785e0326cec049b7d8
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:17:06 2026 -0400
+| 
+|     Update README.md
+| 
+* commit cffb236c3137aacc1bd64438452ea5ecdfb6de1a (tag: v2.0.0)
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:08:30 2026 -0400
+| 
+|     Remove nginx from Dockerfile installation
+| 
+* commit 4bb4b11b3175035bc86f3035eac0338580a5f24e
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:07:16 2026 -0400
+| 
+|     Update Docker build command to target only amd64
+| 
+* commit ff55caed60b16b99e7a45f369e0f626113f7342c
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:05:20 2026 -0400
+| 
+|     Remove Nginx exposure and command from Dockerfile
+|     
+|     Removed the default Nginx exposure and command.
+| 
+* commit b49a7bc95e9b01bad7758f0adef33a8e8e0e7744
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:04:18 2026 -0400
+| 
+|     Add hostname and pull_policy to flutter-builder service
+| 
+* commit 7ebf7784c49919c127d68a0e497c346fdeaca07b
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 11:02:29 2026 -0400
+| 
+|     Refactor flutter-builder service in docker-compose
+| 
+* commit e50e7261f509013bee49eb7df3ff8ba601b85921
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 10:58:48 2026 -0400
+| 
+|     Update Dockerfile with new versions and commands
+|     
+|     Updated Java, Android, and Flutter versions in Dockerfile. Changed installation commands to use apt-get and added timezone and Gradle environment variables.
+| 
+* commit d754bdca01cc748d3781094606e058b2ccea4e03
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 10:57:50 2026 -0400
+| 
+|     Create build script for Docker container setup
+|     
+|     Added a build script for Docker container management and building.
+| 
+* commit 4bcf3fa19ad25ad01eafb8e45bcbef281e58df65
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 10:32:26 2026 -0400
+| 
+|     Create .dockerignore to optimize Docker builds
+|     
+|     Add a .dockerignore file to exclude unnecessary files and directories from Docker builds.
+| 
+* commit 0921546372f27bc729ba67188286c3a114b015ed
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 10:31:13 2026 -0400
+| 
+|     Upgrade Ubuntu and enhance Dockerfile setup
+|     
+|     Updated Ubuntu version and Android SDK tools. Improved installation commands and added cleanup steps.
+| 
+* commit 9050d05632730435a9e73e3dbc9161a60c25140e
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 10:30:11 2026 -0400
+| 
+|     Add .gitignore file for project dependencies and artifacts
+| 
+* commit 9aacd813ce44aef64296e60a7d087adf51103a95
+| Author: Sinfallas <sinfallas@gmail.com>
+| Date:   Wed Sep 16 10:27:32 2026 -0400
+| 
+|     Create docker-compose.yml
+| 
+* commit 973c75738c790766aead4b37f5410d045ff1a08b
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Sun Jun 29 11:03:27 2025 -0400
+| 
+|     * update
+| 
+* commit ef42b325cde86228ac0a71b6677441465a2b2a97 (tag: v1.0)
+| Author: Jesús Palencia <sinfallas@gmail.com>
+| Date:   Wed Nov 20 10:49:20 2024 -0400
+| 
+|     Update README.md
+| 
+* commit fac542f89e8fc892ce94da755e027063a393a5f4
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Sun May 5 16:52:44 2024 -0400
+| 
+|     * changelog
+| 
+* commit 110ddc8138663d84866074f4647a1b4aa2b9db3a
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Sun May 5 16:52:30 2024 -0400
+| 
+|     * docker
+| 
+* commit e5cdbebb4fa22a5e780d11b881de2d2ee82285c1
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Sun Apr 28 23:14:32 2024 -0400
+| 
+|     * changelog
+| 
+* commit bffc158b9d5c46dd91dd4a5618c689efa183251f
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Sun Apr 28 23:14:12 2024 -0400
+| 
+|     * para publicacion
+| 
+* commit 5ee5a9e50ed3db081421039eb993650a7ede2949
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Wed Apr 24 11:20:06 2024 -0400
+| 
+|     Update Dockerfile
+| 
+* commit 8039329a3f278243ff75cef3023b649ec7cc2066
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Wed Apr 24 10:47:23 2024 -0400
+| 
+|     Update Dockerfile
+| 
+* commit c536fa160b729d9355a396c3c302b3eeb6e10889
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Wed Apr 24 10:29:14 2024 -0400
+| 
+|     Update Dockerfile
+| 
+* commit 87ecab7fc05aec445df7844c9f5861aa914abb30
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Thu Apr 18 21:57:31 2024 -0400
+| 
+|     * changelog
+| 
+* commit 931af73a0bd58cc0bb0917045b0dd37744c4732c
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Thu Apr 18 21:57:24 2024 -0400
+| 
+|     * update
+| 
+* commit 7a4e3de5758ebd13f4befc7379e0477973804cf7
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Wed Apr 17 18:03:30 2024 -0400
+| 
+|     * changelog
+| 
+* commit 7445ce4b901f6ca979f55f79c623a3677085d9a0
+| Author: Jesus Palencia <sinfallas@gmail.com>
+| Date:   Wed Apr 17 18:03:13 2024 -0400
+| 
+|     * primer commit
+| 
+* commit b669ba7ddfeaac4942a930c903da6db169bcdb92
+  Author: Jose Perez <sinfallas@yahoo.com>
+  Date:   Wed Apr 17 17:57:46 2024 -0400
+  
+      Initial commit
