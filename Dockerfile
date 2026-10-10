@@ -22,6 +22,7 @@ ENV PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/emulator:
 WORKDIR /app
 
 # dependencias
+RUN mkdir -p /usr/share/man/man1
 RUN apt-get update -qq && apt-get -y dist-upgrade && apt-get -y install --no-install-recommends --no-install-suggests ruby-full rubygems build-essential awscli nano openjdk-$JAVA_VERSION-jdk curl unzip sed git bash xz-utils libglvnd0 ssh xauth x11-xserver-utils libpulse0 libxcomposite1 libgl1 && apt-get clean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # fastlane
