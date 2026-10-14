@@ -87,7 +87,6 @@ services:
 
 **For Development / Pre-release (Builds APK):**
 ```bash
-docker compose --profile dev pull
 docker compose --profile dev up --abort-on-container-exit
 docker compose --profile dev down -v
 ```
@@ -96,7 +95,6 @@ docker compose --profile dev down -v
 **For Production (Builds AAB & Publishes to Play Store):**
 *Ensure your `.env` variables are correctly set or exported in your CI runner before executing.*
 ```bash
-docker compose --profile pro pull
 docker compose --profile pro up --abort-on-container-exit
 docker compose --profile pro down -v
 ```
