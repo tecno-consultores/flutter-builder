@@ -12,7 +12,7 @@ services:
       - android-sdk-cache:/usr/local/android-sdk
     working_dir: /app
     environment:
-      - GRADLE_OPTS=${GRADLE_OPTS:--Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
+      - GRADLE_OPTS=${GRADLE_OPTS:--Xmx2048m -Dorg.gradle.jvmargs=-Xmx2048m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
     command: bash -c "flutter pub get && flutter build apk --release -v"
 
   build-publish-aab:
@@ -29,7 +29,7 @@ services:
       - ${PLAY_STORE_JSON_PATH:-/tmp/secrets/google-play.json}:/secrets/play_store_key.json:ro
     working_dir: /app
     environment:
-      - GRADLE_OPTS=${GRADLE_OPTS:--Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
+      - GRADLE_OPTS=${GRADLE_OPTS:--Xmx2048m -Dorg.gradle.jvmargs=-Xmx2048m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
       - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-}
       - KEY_ALIAS=${KEY_ALIAS:-}
       - KEY_PASSWORD=${KEY_PASSWORD:-}

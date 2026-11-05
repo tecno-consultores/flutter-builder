@@ -9,7 +9,7 @@ Environment designed to be used in CI/CD flows to compile modern Android APKs or
 * **OS:** Ubuntu 26.04
 * **Java:** OpenJDK 21 (LTS)
 * **Gradle:** 9.7.1 (System) & 9.3.1 (Pre-cached Flutter Wrapper)
-* **Android SDK:** API 36 & API 35 (Build Tools 36.0.0 & 35.0.0)
+* **Android SDK:** API 36 (Build Tools 36.0.0)
 * **Android NDK:** 28.2.13676358 & CMake 3.22.1
 * **Flutter:** 3.47.9 (Stable Channel)
 * **Publishing:** Ruby + Fastlane (Included)
@@ -37,7 +37,7 @@ Create a `.env` file to manage the container setup and inject secure credentials
 ```env
 hostname=flutter_ci_runner
 pull_policy=always
-GRADLE_OPTS=-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true
+GRADLE_OPTS=-Xmx2048m -Dorg.gradle.jvmargs=-Xmx2048m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true
 
 # Required for 'pro' profile (Google Play Publishing)
 PLAY_STORE_JSON_PATH="/path/to/your/secrets/google-play.json"
@@ -65,7 +65,7 @@ services:
       - android-sdk-cache:/usr/local/android-sdk
     working_dir: /app
     environment:
-      - GRADLE_OPTS=${GRADLE_OPTS:--Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
+      - GRADLE_OPTS=${GRADLE_OPTS:--Xmx2048m -Dorg.gradle.jvmargs=-Xmx2048m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
     command: bash -c "flutter pub get && flutter build apk --release -v"
 
   build-publish-aab:
@@ -82,7 +82,7 @@ services:
       - ${PLAY_STORE_JSON_PATH:-/tmp/secrets/google-play.json}:/secrets/play_store_key.json:ro
     working_dir: /app
     environment:
-      - GRADLE_OPTS=${GRADLE_OPTS:--Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
+      - GRADLE_OPTS=${GRADLE_OPTS:--Xmx2048m -Dorg.gradle.jvmargs=-Xmx2048m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
       - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-}
       - KEY_ALIAS=${KEY_ALIAS:-}
       - KEY_PASSWORD=${KEY_PASSWORD:-}

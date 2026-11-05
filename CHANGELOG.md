@@ -13,10 +13,13 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1
   * **Compatibilidad de Java con Kotlin DSL y Gradle Wrapper (`Dockerfile`):** Ajustado `JAVA_VERSION` de `26` a `21` (OpenJDK 21 LTS), exportado `JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"` y vinculado en Flutter mediante `flutter config --jdk-dir=$JAVA_HOME`, garantizando compatibilidad total con el plugin Gradle de Flutter (`kotlin("jvm") 2.2.20`), Gradle `9.3.1` / `9.7.1`, AGP `9.1.0` y Kotlin `2.4.0`.
 
 ### 🚀 Añadido y Mejorado (Added & Changed)
+* **Aceleración de Descargas Multihilo (`aria2c`) y Descompresión Paralela (`pixz`) en `Dockerfile`:**
+  * Sustituido `curl` (1 sola conexión TCP) por `aria2c -x 16 -s 16 -k 1M --file-allocation=none` para las descargas de Gradle (`gradle-9.7.1-bin.zip`), Android Command-Line Tools (`android_tools.zip`), Flutter SDK (`flutter.tar.xz`) y la distribución del Gradle Wrapper (`gradle-9.3.1-all.zip`).
+  * Incorporada descompresión multihilo con `tar -I pixz -xf flutter.tar.xz` y eliminado el comando interno redundante `flutter update-packages`.
 * **Preinstalación Completa del Toolchain Android y Actualización a Flutter 3.47.9 (`Dockerfile`):**
   * Actualizado `FLUTTER_VERSION` de `3.47.4` a `3.47.9` (última versión del canal estable).
-  * Incorporados `ANDROID_VERSION="36"`, `ANDROID_BUILD_TOOLS_VERSION="36.0.0"`, `ANDROID_NDK_VERSION="28.2.13676358"` y `CMAKE_VERSION="3.22.1"` (manteniendo además `platforms;android-35` y `build-tools;35.0.0` por retrocompatibilidad) para evitar la descarga en vivo de más de 1.5 GB durante la compilación.
-  * Añadido paso de calentamiento (`warmup`) durante la construcción de la imagen (`flutter create /tmp/warmup && ./gradlew help --no-daemon`) para predescargar la distribución del Gradle Wrapper (`9.3.1`) y precompilar el plugin Gradle de Flutter dentro de la imagen.
+  * Incorporados `ANDROID_VERSION="36"`, `ANDROID_BUILD_TOOLS_VERSION="36.0.0"`, `ANDROID_NDK_VERSION="28.2.13676358"` y `CMAKE_VERSION="3.22.1"` para evitar la descarga en vivo de más de 1.5 GB durante la compilación.
+  * Añadido paso de calentamiento (`warmup`) durante la construcción de la imagen (`flutter create /tmp/warmup && ./gradlew help --no-daemon`) con `gradle-9.3.1-all.zip` predescargado vía `aria2c` para dejar precompilado el plugin Gradle de Flutter dentro de la imagen.
 * **Persistencia de Cachés y Trazabilidad en Docker Compose (`docker-compose.yml`, `env.example`):**
   * Añadidos los volúmenes `gradle-cache:/root/.gradle`, `pub-cache:/root/.pub-cache` y `android-sdk-cache:/usr/local/android-sdk` para conservar artefactos y posibles descargas futuras de SDK/NDK adicionales entre ejecuciones efímeras.
   * Añadidos valores por defecto seguros en variables de entorno (`${hostname:-flutter_ci_runner}`, `${pull_policy:-always}`) y el flag `--verbose` (`-v`) en `flutter build apk` y `flutter build appbundle` para exponer el progreso detallado en consola.
