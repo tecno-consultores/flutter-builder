@@ -7,10 +7,11 @@ Environment designed to be used in CI/CD flows to compile modern Android APKs or
 ## 🛠️ Stack & Versions
 
 * **OS:** Ubuntu 26.04
-* **Java:** JDK 26
-* **Gradle:** 9.7.1
-* **Android SDK:** API 35 (Build Tools 35.0.0)
-* **Flutter:** 3.47.4 (Stable Channel)
+* **Java:** OpenJDK 21 (LTS)
+* **Gradle:** 9.7.1 (System) & 9.3.1 (Pre-cached Flutter Wrapper)
+* **Android SDK:** API 36 & API 35 (Build Tools 36.0.0 & 35.0.0)
+* **Android NDK:** 28.2.13676358 & CMake 3.22.1
+* **Flutter:** 3.47.9 (Stable Channel)
 * **Publishing:** Ruby + Fastlane (Included)
 
 ## 🚀 Usage (Docker Compose)
@@ -36,6 +37,7 @@ Create a `.env` file to manage the container setup and inject secure credentials
 ```env
 hostname=flutter_ci_runner
 pull_policy=always
+GRADLE_OPTS=-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true
 
 # Required for 'pro' profile (Google Play Publishing)
 PLAY_STORE_JSON_PATH="/path/to/your/secrets/google-play.json"
@@ -53,34 +55,48 @@ services:
   build-apk:
     image: sinfallas/flutter-builder:latest
     profiles: ["dev", "pre"]
-    container_name: ${hostname} 
-    hostname: ${hostname}
-    pull_policy: ${pull_policy}
+    container_name: ${hostname:-flutter_ci_runner}
+    hostname: ${hostname:-flutter_ci_runner}
+    pull_policy: ${pull_policy:-always}
     volumes:
       - ./codigo_flutter:/app
+      - gradle-cache:/root/.gradle
+      - pub-cache:/root/.pub-cache
+      - android-sdk-cache:/usr/local/android-sdk
     working_dir: /app
-    command: bash -c "flutter pub get && flutter build apk --release"
+    environment:
+      - GRADLE_OPTS=${GRADLE_OPTS:--Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
+    command: bash -c "flutter pub get && flutter build apk --release -v"
 
   build-publish-aab:
     image: sinfallas/flutter-builder:latest
     profiles: ["pro"]
-    container_name: ${hostname} 
-    hostname: ${hostname}
-    pull_policy: ${pull_policy}
+    container_name: ${hostname:-flutter_ci_runner}
+    hostname: ${hostname:-flutter_ci_runner}
+    pull_policy: ${pull_policy:-always}
     volumes:
       - ./codigo_flutter:/app
-      - ${PLAY_STORE_JSON_PATH}:/secrets/play_store_key.json:ro
+      - gradle-cache:/root/.gradle
+      - pub-cache:/root/.pub-cache
+      - android-sdk-cache:/usr/local/android-sdk
+      - ${PLAY_STORE_JSON_PATH:-/tmp/secrets/google-play.json}:/secrets/play_store_key.json:ro
     working_dir: /app
     environment:
-      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
-      - KEY_ALIAS=${KEY_ALIAS}
-      - KEY_PASSWORD=${KEY_PASSWORD}
-      - PACKAGE_NAME=${PACKAGE_NAME}
+      - GRADLE_OPTS=${GRADLE_OPTS:--Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
+      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-}
+      - KEY_ALIAS=${KEY_ALIAS:-}
+      - KEY_PASSWORD=${KEY_PASSWORD:-}
+      - PACKAGE_NAME=${PACKAGE_NAME:-}
     command: >
       bash -c "flutter pub get && 
-      flutter build appbundle --release && 
+      flutter build appbundle --release -v && 
       cd android && 
       fastlane supply --track production --aab ../build/app/outputs/bundle/release/app-release.aab --json_key /secrets/play_store_key.json --package_name $$PACKAGE_NAME"
+
+volumes:
+  gradle-cache:
+  pub-cache:
+  android-sdk-cache:
 ```
 
 ### 4. Trigger the Build
@@ -88,7 +104,7 @@ services:
 **For Development / Pre-release (Builds APK):**
 ```bash
 docker compose --profile dev up --abort-on-container-exit
-docker compose --profile dev down -v
+docker compose --profile dev down
 ```
 *Artifact location:* `./codigo_flutter/build/app/outputs/flutter-apk/app-release.apk`
 
@@ -96,14 +112,14 @@ docker compose --profile dev down -v
 *Ensure your `.env` variables are correctly set or exported in your CI runner before executing.*
 ```bash
 docker compose --profile pro up --abort-on-container-exit
-docker compose --profile pro down -v
+docker compose --profile pro down
 ```
 
 ## 🏗️ Building the Image (Maintainers)
 
-To rebuild and push this image to Docker Hub, use the provided `build` script. The script uses Docker Buildx to compile strictly for `linux/amd64` (to maintain Android SDK binary compatibility) and performs an aggressive system prune afterwards to keep the build node clean.
+To rebuild and push this image to Docker Hub, use the provided `build-image` script. The script uses Docker Buildx to compile strictly for `linux/amd64` (to maintain Android SDK binary compatibility) and performs an aggressive system prune afterwards to keep the build node clean.
 
 ```bash
-chmod +x build
-./build
+chmod +x build-image
+./build-image
 ```
