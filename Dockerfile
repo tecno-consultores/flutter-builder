@@ -1,5 +1,5 @@
 FROM ubuntu:26.04
-LABEL org.opencontainers.image.authors="sinfallas@gmail.com"
+LABEL org.opencontainers.image.authors="Jesus Palencia <sinfallas@gmail.com> (Creado en Tecno Consultores)"
 
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV JAVA_VERSION="21"

@@ -123,3 +123,6 @@ To rebuild and push this image to Docker Hub, use the provided `build-image` scr
 chmod +x build-image
 ./build-image
 ```
+
+
+Copyright (C) 2026 Jesus Palencia <sinfallas@gmail.com> (Creado en Tecno Consultores)
