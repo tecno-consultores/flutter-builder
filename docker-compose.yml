@@ -7,13 +7,15 @@ services:
     pull_policy: ${pull_policy:-always}
     volumes:
       - ./codigo_flutter:/app
+      - ${DEBUG_INFO_HOST_PATH:-./debug_files}:/debug-info
       - gradle-cache:/root/.gradle
       - pub-cache:/root/.pub-cache
       - android-sdk-cache:/usr/local/android-sdk
     working_dir: /app
     environment:
       - GRADLE_OPTS=${GRADLE_OPTS:--Xmx2048m -Dorg.gradle.jvmargs=-Xmx2048m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dorg.gradle.caching=true}
-    command: bash -c "flutter pub get && flutter build apk --release -v"
+      - APK_BUILD_CMD=${APK_BUILD_CMD:-flutter pub get && flutter build apk --release -v}
+    command: ["bash", "-c", "eval \"$$APK_BUILD_CMD\""]
 
   build-publish-aab:
     image: sinfallas/flutter-builder:latest
@@ -23,6 +25,7 @@ services:
     pull_policy: ${pull_policy:-always}
     volumes:
       - ./codigo_flutter:/app
+      - ${DEBUG_INFO_HOST_PATH:-./debug_files}:/debug-info
       - gradle-cache:/root/.gradle
       - pub-cache:/root/.pub-cache
       - android-sdk-cache:/usr/local/android-sdk
@@ -34,11 +37,9 @@ services:
       - KEY_ALIAS=${KEY_ALIAS:-}
       - KEY_PASSWORD=${KEY_PASSWORD:-}
       - PACKAGE_NAME=${PACKAGE_NAME:-}
-    command: >
-      bash -c "flutter pub get && 
-      flutter build appbundle --release -v && 
-      cd android && 
-      fastlane supply --track production --aab ../build/app/outputs/bundle/release/app-release.aab --json_key /secrets/play_store_key.json --package_name $$PACKAGE_NAME"
+      - AAB_BUILD_CMD=${AAB_BUILD_CMD:-flutter pub get && flutter build appbundle --release -v}
+      - FASTLANE_CMD=${FASTLANE_CMD:-cd android && fastlane supply --track production --aab ../build/app/outputs/bundle/release/app-release.aab --json_key /secrets/play_store_key.json --package_name $$PACKAGE_NAME}
+    command: ["bash", "-c", "eval \"$$AAB_BUILD_CMD\" && eval \"$$FASTLANE_CMD\""]
 
 volumes:
   gradle-cache:
